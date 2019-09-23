@@ -1,0 +1,86 @@
+{
+  "name": "IRent-backend",
+  "version": "1.0.0",
+  "description": "Property management system",
+  "main": "dist/src/server/server.js",
+  "repository": "https://github.com/anyatibrian/IRent-backend.git",
+  "author": "anyatibrian <anyatibrian@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server/server.ts",
+    "test": " nyc --reporter=html --reporter=text mocha -r ts-node/register src/*/**/**/*spec.ts src/*/**/*.spec.ts src/**/*.spec.ts --timeout 20000 --exit"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.spec.ts",
+      "coverage",
+      "dist",
+      "src/database/migrations",
+      "src/database/seeders",
+      "src/database/other.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm run start-dev",
+    "ext": "ts"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.3",
+    "@types/dotenv": "^6.1.1",
+    "all": "^0.0.0",
+    "body-parser": "^1.19.0",
+    "docstring": "^1.1.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "node": "^12.10.0",
+    "nodemon": "^1.19.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^4.31.2",
+    "sequelize-cli": "^5.5.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.1",
+    "@types/chai-http": "^4.2.0",
+    "@types/express": "^4.17.1",
+    "@types/mocha": "^5.2.7",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.7.5",
+    "@types/sequelize": "^4.28.4",
+    "@types/typescript": "^2.0.0",
+    "celebrate": "^10.0.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0",
+    "mongoose": "^5.7.1",
+    "nyc": "^14.1.1",
+    "pg": "^7.12.1",
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.6.2"
+  }
+}
