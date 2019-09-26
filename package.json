@@ -1,14 +1,20 @@
 {
-  "name": "IRent-backend",
+  "name": "IrentIt",
   "version": "1.0.0",
-  "description": "Property management system",
-  "main": "dist/src/server/server.js",
-  "repository": "https://github.com/anyatibrian/IRent-backend.git",
-  "author": "anyatibrian <anyatibrian@gmail.com>",
-  "license": "MIT",
+  "description": "",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server/server.ts",
-    "test": " nyc --reporter=html --reporter=text mocha -r ts-node/register src/*/**/**/*spec.ts src/*/**/*.spec.ts src/**/*.spec.ts --timeout 20000 --exit"
+    "start": " node ./dist/server/server.js",
+    "start-dev": "ts-node ./src/server/server.ts",
+    "build-dev": "tsc && npm start",
+    "dev": "nodemon -e ts -w ./src -x npm run start-dev",
+    "test": "cross-env NODE_ENV=test npm run reset:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/polyfill -r ts-node/register src/*/**/**/*spec.ts src/*/**/*.spec.ts src/**/*.spec.ts --timeout 20000 --exit",
+    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*",
+    "migrate": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize db:migrate",
+    "reset:db": "npm run sequelize db:migrate:undo:all && npm run sequelize db:migrate",
+    "build": "rm -rf dist && tsc && npm run reset:db",
+    "lint": "lint-staged",
+    "coverage": "nyc report --reporter=text-lcov|coveralls"
   },
   "nyc": {
     "extension": [
@@ -21,8 +27,7 @@
       "coverage",
       "dist",
       "src/database/migrations",
-      "src/database/seeders",
-      "src/database/other.ts"
+      "src/database/seeders"
     ],
     "reporter": [
       "html"
@@ -42,9 +47,19 @@
     "exec": "npm run start-dev",
     "ext": "ts"
   },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && lint-staged"
+    }
+  },
+  "author": "Cell Farm",
+  "license": "MIT",
   "dependencies": {
-    "@types/chai": "^4.2.3",
-    "@types/dotenv": "^6.1.1",
     "all": "^0.0.0",
     "body-parser": "^1.19.0",
     "docstring": "^1.1.0",
@@ -61,8 +76,15 @@
     "typescript": "^3.6.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.6.2",
     "@types/body-parser": "^1.17.1",
+    "@types/chai": "^4.2.3",
     "@types/chai-http": "^4.2.0",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.1",
     "@types/mocha": "^5.2.7",
     "@types/morgan": "^1.7.37",
@@ -72,6 +94,7 @@
     "celebrate": "^10.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "cross-env": "^6.0.0",
     "mocha": "^6.2.0",
     "mongoose": "^5.7.1",
     "nyc": "^14.1.1",
