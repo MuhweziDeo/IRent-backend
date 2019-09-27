@@ -8,7 +8,7 @@
     "start-dev": "ts-node ./src/server/server.ts",
     "build-dev": "tsc && npm start",
     "dev": "nodemon -e ts -w ./src -x npm run start-dev",
-    "test": " nyc --reporter=html --reporter=text mocha -r ts-node/register src/*/**/**/*spec.ts src/*/**/*.spec.ts src/**/*.spec.ts --timeout 20000 --exit",
+    "test": "cross-env NODE_ENV=test npm run reset:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/polyfill -r ts-node/register src/*/**/**/*spec.ts src/*/**/*.spec.ts src/**/*.spec.ts --timeout 20000 --exit",
     "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*",
     "migrate": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize db:migrate",
     "reset:db": "npm run sequelize db:migrate:undo:all && npm run sequelize db:migrate",
@@ -27,7 +27,9 @@
       "coverage",
       "dist",
       "src/database/migrations",
-      "src/database/seeders"
+      "src/database/seeders",
+      "src/database/models/index.ts",
+      "src/server"
     ],
     "reporter": [
       "html"
@@ -81,6 +83,7 @@
     "@babel/node": "^7.2.2",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.6.2",
+    "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.17.1",
     "@types/chai": "^4.2.3",
     "@types/chai-http": "^4.2.0",
@@ -91,6 +94,7 @@
     "@types/node": "^12.7.5",
     "@types/sequelize": "^4.28.4",
     "@types/typescript": "^2.0.0",
+    "bcrypt": "^3.0.6",
     "celebrate": "^10.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",

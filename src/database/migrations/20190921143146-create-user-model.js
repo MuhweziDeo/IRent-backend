@@ -22,10 +22,12 @@ module.exports = {
       userRole: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 1,
       },
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

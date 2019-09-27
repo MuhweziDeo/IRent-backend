@@ -1,11 +1,19 @@
 import db from '../database/models'
-class ServicesProvidyver {
+import { Op } from 'sequelize'
+class ServicesProvidver {
   /**
    * @params {body}
    * @returns {newUser}
    */
-  public createUser = async (body: any): Promise<any> => {
-    const newUser: any = await db.UserModel.create(body)
+  public static createUser = (body: any) => {
+    const newUser: object = db.UserModel.create(body)
     return newUser
   }
+  public static checkUserExist = (email: any) => {
+    const userExist = db.UserModel.findOne({
+      where: { email: email },
+    })
+    return userExist
+  }
 }
+export default ServicesProvidver

@@ -5,8 +5,8 @@ interface IuserInterfaceAttributes {
   username: string
   password: string
   email: string
-  isActive: boolean
-  userRole: number
+  isActive?: boolean
+  userRole?: number
   createdAt?: string
   updatedAt?: string
 }
@@ -37,6 +37,7 @@ export const initUser = (sequelize: Sequelize.Sequelize): UserModel => {
     userRole: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      defaultValue: 1,
     },
     isActive: {
       type: Sequelize.BOOLEAN,

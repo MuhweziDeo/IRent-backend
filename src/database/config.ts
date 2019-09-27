@@ -4,7 +4,6 @@ dotenv.config()
 
 module.exports = {
   development: {
-    use_env_variable: 'DATABASE_URL_DEV',
     url: process.env.DATABASE_URL_DEV,
     dialect: 'postgres',
     logging: false,
@@ -21,7 +20,6 @@ module.exports = {
     migrationStorageTableSchema: 'custom_schema',
   },
   test: {
-    use_env_variable: 'DATABASE_URL_TEST',
     url: process.env.DATABASE_URL_TEST,
     dialect: 'postgres',
     logging: false,
@@ -38,7 +36,6 @@ module.exports = {
     migrationStorageTableSchema: 'custom_schema',
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     url: process.env.DATABASE_URL,
     // Use a different storage type. Default: sequelize
