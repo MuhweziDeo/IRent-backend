@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { userValidationSchema } from './users.validate'
+import { userValidationSchema, userLoginSchema } from './users.validate'
 import { celebrate } from 'celebrate'
 import { checkUserExist } from '../../middlewares/userExist'
 import usersAuth from './users.controller'
@@ -14,6 +14,11 @@ userRouter
     user.createUser,
   )
   .get()
-  .put()
+  .put();
 
+userRouter
+.route('/login')
+.post(
+  celebrate({body: userLoginSchema}),
+  user.loginUser);  
 export default userRouter
